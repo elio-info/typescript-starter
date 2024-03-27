@@ -5,25 +5,27 @@ export class UsrsService {
     
     private usrs= [
         { 
-            idk:1,
-            cargo:"Jef",
-            autor:"Proyecto",
-            year:2021
+            "idk":1,
+            "cargo":"Jef",
+            "autor":"Proyecto",
+            "year":2021
         } ,
         { 
-            idk:2,cargo:"Obr",
-            autor:"Proyecto",
-            year:2022
+            "idk":2,cargo:"Obr",
+            "autor":"Proyecto",
+            "year":2022
         } ,
         { 
-            idk:3,cargo:"Obr",
-            autor:"Proyecto",
-            year:2023
+            "idk":3,
+            "cargo":"Obr",
+            "autor":"Proyecto",
+            "year":2023
         } ,
         { 
-            idk:4,cargo:"Inv",
-            autor:"Proyecto",
-            year:2024
+            "idk":4,
+            "cargo":"Inv",
+            "autor":"Proyecto",
+            "year":2024
         } 
           
     ]
@@ -47,7 +49,7 @@ export class UsrsService {
     @Get(':idk')@Param('idk') */ 
     
     findOne( idk:number ){ 
-        return this.usrs.find(usr=>{ usr.idk === idk}) 
+        return this.usrs.find(usr=> usr.idk === idk) 
     }
     /**
      * usrs/:usrsX add usuarios
@@ -55,7 +57,7 @@ export class UsrsService {
       
     @Post()@Body() */
     create(usrsX: { cargo:'Inv'|'Obr'|'Jef', autor:string,year: number}){
-            const persnOrdId=[...this.usrs].sort((a,b) => b.idk = a.idk)
+            const persnOrdId=[...this.usrs].sort((a,b) => b.idk - a.idk)
             const npersn={ idk:persnOrdId[0].idk+1,...usrsX }
         this.usrs.push(npersn)    
         return usrsX
