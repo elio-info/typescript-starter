@@ -10,8 +10,8 @@ import { UsrsService } from './usrs.service';
  */
 @Controller('usrs')
 export class UsrsController {
-   //constructor()
-    private readonly usrsService:UsrsService
+   //
+   constructor( private readonly usrsService:UsrsService){}
     /**
      * usrs todos los usuarios
      */ 
@@ -31,31 +31,31 @@ export class UsrsController {
      * usrs/:idk usuario X
      */ 
     @Get(':idk')
-    findOne(@Param('idk') idk:number ){ 
-        return {idk}
+    findOne(@Param('idk') idk:string ){ 
+        return this.usrsService.findOne(+idk)
     }
     /**
      * usrs/:usrsX add usuarios
      * ':usrsX'
      */ 
     @Post()
-    create(@Body() usrsX:{}){ 
-        return usrsX
+    create(@Body() usrsX:{cargo:'Inv'|'Obr'|'Jef',    autor:string,    year: number}){ 
+        return this.usrsService.create(usrsX) 
     }
     /**
      * usrs/:usrsX modificando usuario X
      */ 
     @Patch(':idk')
-    modify(@Param('idk') idk:number, @Body()usrsX:{}){ 
-        let psr=this.usrsService.modify(idk,usrsX)
-        return {indx:idk,msg:"Modificado!!",prs:this.usrsService.findAll()}
+    modify(@Param('idk') idk:string, @Body()usrsX:{cargo?:'Inv'|'Obr'|'Jef',    autor?:string,    year?: number}){ 
+        let psr=this.usrsService.modify(+idk,usrsX)
+        return psr
     }
     /**
      * usrs/:idk usuario X
      */ 
     @Delete(':idk')
-    del(@Param('idk') idk:number ){ 
-        return this.usrsService.del(idk)
+    del(@Param('idk') idk:string ){ 
+        return this.usrsService.del(+idk)
     }
     
 }

@@ -54,15 +54,9 @@ export class UsrsService {
      * ':usrsX'
       
     @Post()@Body() */
-    create(usrsX: {
-        cargo:'Inv'|'Obr'|'Jef',
-        autor:string,
-        year: number}){
+    create(usrsX: { cargo:'Inv'|'Obr'|'Jef', autor:string,year: number}){
             const persnOrdId=[...this.usrs].sort((a,b) => b.idk = a.idk)
-            const npersn={
-                idk:persnOrdId[0].idk+1,
-                ...usrsX
-            }
+            const npersn={ idk:persnOrdId[0].idk+1,...usrsX }
         this.usrs.push(npersn)    
         return usrsX
     }
