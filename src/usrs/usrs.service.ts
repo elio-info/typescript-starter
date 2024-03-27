@@ -43,7 +43,7 @@ export class UsrsService {
      * @Get()    
      */ 
     findAny(cargo?:'Inv'|'Obr'|'Jef'){ 
-        return this.usrs.filter( usr =>{usr.cargo===cargo})
+        return cargo?this.usrs.filter( usr =>{usr.cargo===cargo}):this.findAll()
     }
     /**
      * usrs/:idk usuario X

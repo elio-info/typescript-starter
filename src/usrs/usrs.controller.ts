@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query , ParseIntPipe} from '@nestjs/common';
 import { UsrsService } from './usrs.service';
 /**
  * GET /usrs todos los usuarios
@@ -14,11 +14,12 @@ export class UsrsController {
    constructor( private readonly usrsService:UsrsService){}
     /**
      * usrs todos los usuarios
-     */ 
+    
     @Get()
     findAll(){ 
         return this.usrsService.findAll()
-    }
+    } 
+    */ 
     /**
      * usrs/:idk usuario X
      * /////@Param('idk' idk:string ){idk}
@@ -31,8 +32,8 @@ export class UsrsController {
      * usrs/:idk usuario X
      */ 
     @Get(':idk')
-    findOne(@Param('idk') idk:string ){ 
-        return this.usrsService.findOne(+idk)
+    findOne(@Param('idk',ParseIntPipe) idk:number ){ 
+        return this.usrsService.findOne(idk)
     }
     /**
      * usrs/:usrsX add usuarios
@@ -46,16 +47,16 @@ export class UsrsController {
      * usrs/:usrsX modificando usuario X
      */ 
     @Patch(':idk')
-    modify(@Param('idk') idk:string, @Body()usrsX:{cargo?:'Inv'|'Obr'|'Jef',    autor?:string,    year?: number}){ 
-        let psr=this.usrsService.modify(+idk,usrsX)
+    modify(@Param('idk', ParseIntPipe) idk:number, @Body()usrsX:{cargo?:'Inv'|'Obr'|'Jef',    autor?:string,    year?: number}){ 
+        let psr=this.usrsService.modify(idk,usrsX)
         return psr
     }
     /**
      * usrs/:idk usuario X
      */ 
     @Delete(':idk')
-    del(@Param('idk') idk:string ){ 
-        return this.usrsService.del(+idk)
+    del(@Param('idk', ParseIntPipe) idk:number ){ 
+        return this.usrsService.del(idk)
     }
     
 }
