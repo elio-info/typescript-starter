@@ -11,7 +11,8 @@ export class UsrsService {
             "year":2021
         } ,
         { 
-            "idk":2,cargo:"Obr",
+            "idk":2,
+            "cargo":"Obr",
             "autor":"Proyecto",
             "year":2022
         } ,
