@@ -1,5 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Query , ParseIntPipe} from '@nestjs/common';
 import { UsrsService } from './usrs.service';
+import { CreateUsrsDto } from './dto/create-usrs.dto';
+import { UpdateUsrsDto } from './dto/update-usrs.dto';
 /**
  * GET /usrs todos los usuarios
  * GET /usrs/:idk usuario X
@@ -40,15 +42,15 @@ export class UsrsController {
      * ':usrsX'
      */ 
     @Post()
-    create(@Body() usrsX:{cargo:'Inv'|'Obr'|'Jef',    autor:string,    year: number}){ 
-        return this.usrsService.create(usrsX) 
+    create(@Body() createUserDto:CreateUsrsDto){ 
+        return this.usrsService.create(createUserDto) 
     }
     /**
      * usrs/:usrsX modificando usuario X
      */ 
     @Patch(':idk')
-    modify(@Param('idk', ParseIntPipe) idk:number, @Body()usrsX:{cargo?:'Inv'|'Obr'|'Jef',    autor?:string,    year?: number}){ 
-        let psr=this.usrsService.modify(idk,usrsX)
+    modify(@Param('idk', ParseIntPipe) idk:number, @Body()userUpdateDto: UpdateUsrsDto){ 
+        let psr=this.usrsService.modify(idk,userUpdateDto)
         return psr
     }
     /**

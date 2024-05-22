@@ -1,4 +1,6 @@
 import { Injectable } from '@nestjs/common';
+import { CreateUsrsDto } from './dto/create-usrs.dto';
+import { UpdateUsrsDto } from './dto/update-usrs.dto';
 
 @Injectable()
 export class UsrsService {
@@ -57,25 +59,22 @@ export class UsrsService {
      * ':usrsX'
       
     @Post()@Body() */
-    create(usrsX: { cargo:'Inv'|'Obr'|'Jef', autor:string,year: number}){
+    create(createUsrDto: CreateUsrsDto){
             const persnOrdId=[...this.usrs].sort((a,b) => b.idk - a.idk)
-            const npersn={ idk:persnOrdId[0].idk+1,...usrsX }
+            const npersn={ idk:persnOrdId[0].idk+1,...createUsrDto }
         this.usrs.push(npersn)    
-        return usrsX
+        return createUsrDto
     }
     /**
      * usrs/:usrsX modificando usuario X
     
     @Patch(':idk') @Param('idk')@Body()*/ 
-    modify( idk:number, usrsX: {
-        cargo?:'Inv'|'Obr'|'Jef',
-        autor?:string,
-        year?: number}){
+    modify( idk:number, updateUsrDto: UpdateUsrsDto){
         
             this.usrs=this.usrs.map(
                 pers=>{
                     return pers.idk===idk? {
-                        ...pers,...usrsX
+                        ...pers,...updateUsrDto
                     }:pers
                 }//busqueda
             )//fin forman2
