@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable,NotFoundException } from '@nestjs/common';
 import { CreateUsrsDto } from './dto/create-usrs.dto';
 import { UpdateUsrsDto } from './dto/update-usrs.dto';
 
@@ -45,14 +45,16 @@ export class UsrsService {
      * @Get()    
      */ 
     findAny(cargo?:'Inv'|'Obr'|'Jef'){ 
-        return cargo?this.usrs.filter( usr =>{usr.cargo===cargo}):this.findAll()
+        let usrCargo=this.usrs.filter( usr =>usr.cargo===cargo)//
+        return usrCargo.length===0?usrCargo:new NotFoundException('No se encontro elemento buscado...')
     }
     /**
      * usrs/:idk usuario X
     @Get(':idk')@Param('idk') */ 
     
     findOne( idk:number ){ 
-        return this.usrs.find(usr=> usr.idk === idk) 
+        let usrX=this.usrs.find(usr=> usr.idk === idk) 
+        return usrX?usrX: new NotFoundException('No se encontro elemento buscado...')
     }
     /**
      * usrs/:usrsX add usuarios

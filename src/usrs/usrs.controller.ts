@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query , ParseIntPipe} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query , ParseIntPipe, ValidationPipe} from '@nestjs/common';
 import { UsrsService } from './usrs.service';
 import { CreateUsrsDto } from './dto/create-usrs.dto';
 import { UpdateUsrsDto } from './dto/update-usrs.dto';
@@ -27,7 +27,7 @@ export class UsrsController {
      * /////@Param('idk' idk:string ){idk}
      */ 
     @Get()
-    findAny(@Query('çargo') cargo?:'Inv'|'Obr'|'Jef'){ 
+    findAny(@Query('cargo') cargo?:'Inv'|'Obr'|'Jef'){         
         return this.usrsService.findAny(cargo)
     }
     /**
@@ -42,14 +42,14 @@ export class UsrsController {
      * ':usrsX'
      */ 
     @Post()
-    create(@Body() createUserDto:CreateUsrsDto){ 
+    create(@Body(ValidationPipe) createUserDto:CreateUsrsDto){ 
         return this.usrsService.create(createUserDto) 
     }
     /**
      * usrs/:usrsX modificando usuario X
      */ 
     @Patch(':idk')
-    modify(@Param('idk', ParseIntPipe) idk:number, @Body()userUpdateDto: UpdateUsrsDto){ 
+    modify(@Param('idk', ParseIntPipe) idk:number, @Body(ValidationPipe)userUpdateDto: UpdateUsrsDto){ 
         let psr=this.usrsService.modify(idk,userUpdateDto)
         return psr
     }
